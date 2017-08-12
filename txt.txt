@@ -1,3 +1,253 @@
 npm i -g yarn
 json-server --watch db.json
 
+____________________________________________________________
+
+
+1> criar o js do component
+
+import React, {Component} from 'react';
+
+class Series extends Component {
+  render(){
+    return <p></p>
+  }
+}
+
+export default Series
+
+
+
+
+2> importar no app.js ( arquivo principal)
+
+import Series from './Series'
+
+
+
+3> colocar no path de navegacao
+
+<Route exact path='/' component={Home} />
+
+se quiser  fazer por parametro
+
+// criar links dos generos com um metodo
+  renderGenderLink(genre) {
+    return (
+      <span key={genre}>&nbsp;<Link to={`/series/${genre}`}>{genre}</a>
+      </span>
+    )
+  }
+
+   {!this.state.isLoading && <div>
+            Ver séries do gênero: {this
+              .state
+              .genres
+              .map(this.renderGenderLink)}
+    }
+
+<Route path='/series/:genre' component={Series} />
+
+4> Passar o parametro acima num header da pagina do componente
+ seu click no <Route path='/series/:genre' component={Series} />
+ vai ser recebido com :
+Nova Série {this.props.match.params.genre}
+render(){
+    return <section className="intro-section">
+            <h1>Nova Série {this.props.match.params.genre}</h1>
+          </section>
+  }
+
+____________________________________________________________
+
+Chamada de Api
+
+1> criar api.js
+
+import axios from 'axios'
+
+//passar base dos endereços da api
+const api = axios.create({
+  baseURL: 'http://localhost:3001/'
+})
+
+//get simples
+export const loadGenres = () => api.get('genres');
+//post para salvar
+export const saveSeries = (newSeries) => api.post('series', newSeries);
+//get filtrando por o parametro genre no ex
+export const loadSeriesByGenre = (genre) => api.get('series?genre='+genre);
+
+const apis = {
+  loadGenres: loadGenres,
+  saveSeries: saveSeries,
+  loadSeriesByGenre: loadSeriesByGenre
+}
+
+export default apis
+
+2> no js do componente vc tera que fazer:
+
+  2.1 Definir o estado inicial
+
+    constructor(props) {
+        super(props)
+
+        this.state = {
+          series: [],
+          isLoading: false
+        }
+    }
+
+  2.2 Criar o componentDidMount
+
+    componentDidMount(){
+      this.setState({isLoading: true});
+      // passar o genero que vc quer carregar {this.props.match.params.genre}
+      api.loadSeriesByGenre({this.props.match.params.genre}).then((res) => {
+          this.setState({
+            isLoading: false,
+            series: res.data
+          })
+        })   
+     }
+
+
+  2.3 Importar o Api.js
+
+    import api from './Api'
+
+
+
+
+
+
+
+
+
+________________________________________________
+
+Mudando nome de objetos
+
+APi traz o estatus 
+
+"status": "watched",
+
+e vc quer mudar esse estatus "watched"
+
+vc pode criar um objeto dentro do componente 
+
+const statuses = {
+  'watched':'Assistido',
+  'watching':'Assistindo',
+  'toWatch':'Assistir',
+}
+class Series extends Component { ...etc ...
+
+
+e quando for inputar a info no seu render
+{series.status} 
+
+so inputar
+{statuses[series.status]}
+
+____________________________________________________________
+
+Para redirecionar links ou components apos alguma açao
+
+1> importar o redirect na pagina do component
+  import { Redirect } from 'react-router-dom';
+
+2> no metodo render() do componente colocar
+  // se o redirect nao for falso vc vai colocar na tela o componente Redirect
+  {this.state.redirect &&
+    <Redirect to={this.state.redirect} />
+   }
+
+   ex:   render() {
+          return (
+            <section className="intro-section">
+              { !this.state.redirect &&
+                  <Redirect to={this.state.redirect} />
+                }
+              <h1>Nova Série</h1>
+
+3> Como foi criada uma variavel nova no state vai ter que ser criado isso no componente
+  this.state = {
+      redirect: false
+    }
+
+4> dar um set state redirect na ação que vc quer que redirecione
+
+
+____________________________________________________________
+
+
+
+> Fazer mais de um render no mesmo componente
+
+ renderSeries(){
+    return (
+                <div className="item  col-xs-4 col-lg-4">
+                    <div className="thumbnail">
+                      <img className="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
+                      <div className="caption">
+                        <h4 className="group inner list-group-item-heading">
+                          How I met your mother</h4>
+                        <div className="row">
+                          <div className="col-xs-12 col-md-6">
+                            <p className="lead">
+                              AÇÃO</p>
+                          </div>
+                          <div className="col-xs-12 col-md-6">
+                            <a className="btn btn-success" href="">Gerenciar</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+    )
+  }
+  render(){
+    return (
+
+          <div>
+              <section className="intro-section">
+                  <h1>Nova Série {this.props.match.params.genre}</h1>
+              </section>
+
+              <div id="series" className="row list-group">
+                  {this.renderSeries()}
+
+                </div>
+
+              </div>
+
+
+    )
+  }
+
+
+  ___________________________________
+
+> links usar sempre o link
+importar o 
+import { Link } from 'react-router-dom';
+<Link to="/">Home</Link>
+
+
+> qdo o react reclamar de key colcoar uma da repeticao
+
+ renderGenderLink(genre) {
+    return (
+      <span>&nbsp;<a href=''>{genre}</a>
+      </span>
+    )
+  }
+
+   renderGenderLink(genre) {
+    return (
+      <span key={genre}>&nbsp;<a href=''>{genre}</a>
+      </span>
+    )
+  }

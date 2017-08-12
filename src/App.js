@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
 
 import api from './Api'
 import Home from './Home'
+import Series from './Series'
 import NewSeries from './NewSeries'
 
 // criando um const pra testar o route criando uma pagina functional-stateless-component
@@ -41,6 +42,7 @@ class App extends Component {
           </nav>
           <Route exact path='/' component={Home} />
           <Route exact path='/about' component={About} />
+          <Route path='/series/:genre' component={Series} />
           <Route exact path='/new-series' component={NewSeries} />
 
         </div>

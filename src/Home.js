@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router-dom';
 import api from './Api'
 
 class Home extends Component {
@@ -30,7 +31,7 @@ class Home extends Component {
   // criar links dos generos com um metodo
   renderGenderLink(genre) {
     return (
-      <span>&nbsp;<a href=''>{genre}</a>
+      <span key={genre}>&nbsp;<Link to={`/series/${genre}`}>{genre}</Link>
       </span>
     )
   }
@@ -50,15 +51,15 @@ class Home extends Component {
         </section>
         <section>
           {// se o carregamento for true aparece a mensagem abaixo
-          this.state.isLoading && <span>Aguarde, carregando ...</span>
-}
-          {!this.state.isLoading && <div>
-            Ver séries do gênero: {this
-              .state
-              .genres
-              .map(this.renderGenderLink)}
-          </div>
-}
+             this.state.isLoading && <span>Aguarde, carregando ...</span>
+          }
+
+          { !this.state.isLoading &&
+          
+            <div>
+                Ver séries do gênero: {this.state.genres.map(this.renderGenderLink)}
+            </div>
+          }
         </section>
       </div>
     )

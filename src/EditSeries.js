@@ -7,7 +7,7 @@ const statuses = {
   'watching':'Assistindo',
   'toWatch':'Assistir',
 }
-class NewSeries extends Component {
+class EditSeries extends Component {
 
   constructor(props) {
     super(props)
@@ -16,6 +16,7 @@ class NewSeries extends Component {
       genres: [],
       isLoading: false,
       redirect: false,
+      series:{}
     }
 
     // corrigindo o retorno null da ação do botao referenciando o this ao botao
@@ -26,9 +27,16 @@ class NewSeries extends Component {
 
     this.setState({isLoading: true});
 
-    api
-      .loadGenres()
-      .then((res) => {
+    api.loadSeriesById(this.props.match.params.id)
+        .then((res) => {
+          this.setState({ series: res.data })
+          this.refs.name.value = this.state.series.name
+          this.refs.genre.value = this.state.series.genre
+          this.refs.comments.value = this.state.series.comments
+          this.refs.status.value = this.state.series.status
+        })
+
+    api.loadGenres().then((res) => {
         this.setState({
           isLoading: false,
           genres: res.data
@@ -41,6 +49,7 @@ class NewSeries extends Component {
 
     // criando um objeto para conter todas as infos das series usando o "refs" para pegar os valores
     const newSeries = {
+      id: this.props.match.params.id,
       name: this.refs.name.value,
       status: this.refs.status.value,
       genre: this.refs.genre.value,
@@ -48,7 +57,7 @@ class NewSeries extends Component {
     }
 
     // passando a serie pro db
-    api.saveSeries(newSeries)
+    api.updateSeries(newSeries)
       .then((res)=>{
         // console.log((res));
         // console.log(newSeries);
@@ -65,9 +74,10 @@ class NewSeries extends Component {
          {this.state.redirect &&
             <Redirect to={this.state.redirect} />
           }
-        <h1>Nova Série</h1>
+        <h1>Editar Série</h1>
+        {/* <p>{JSON.stringify(this.state)}</p> */}
         <form>
-          <input type="text" ref="name" className="form-control" name="nome" placeholder="Nome da Série"/>
+          <input type="text" ref="name"  className="form-control" name="nome" placeholder="Nome da Série"/>
             <select  ref="status">
               {Object
                   .keys(statuses)
@@ -81,7 +91,7 @@ class NewSeries extends Component {
                     .map( key => <option  key={key} value={key}>{key}</option>)
                 }
             </select>
-          <textarea ref="comments" className="form-control" name="comentarios" placeholder="Comentários sobre a Série"></textarea>
+          <textarea ref="comments"  className="form-control" name="comentarios" placeholder="Comentários sobre a Série"></textarea>
 
             <button type="button" class="btn btn-large btn-block btn-default" onClick={this.saveSeries}>Salvar</button>
             
@@ -93,4 +103,4 @@ class NewSeries extends Component {
   }
 }
 
-export default NewSeries
+export default EditSeries

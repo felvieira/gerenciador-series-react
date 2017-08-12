@@ -47,18 +47,11 @@
       "id": 6
     },
     {
-      "name": "The Flash",
-      "status": "watching",
-      "genre": "Ação",
-      "comments": "Excelente",
-      "id": 7
-    },
-    {
+      "id": 8,
       "name": "Super Girl",
-      "status": "toWatch",
-      "genre": "Ação",
-      "comments": "Preciso ver",
-      "id": 8
+      "status": "watched",
+      "genre": "Comédia",
+      "comments": "Preciso ver"
     },
     {
       "name": "Marvel Agents of Shield",

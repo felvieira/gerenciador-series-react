@@ -3,6 +3,20 @@ json-server --watch db.json
 
 ____________________________________________________________
 
+Criar um metodo com chamada no botao
+
+1> Colocar no botao onClick=""
+    
+     <a className="btn btn-warning" onClick={ () => this.deleteSeries(series.id) }>Excluir</a>
+
+2> escrever o metodo da ação
+    deleteSeries(id){
+        console.log('excluir',id);
+    }
+
+
+____________________________________________________________
+
 
 1> criar o js do component
 
@@ -77,6 +91,9 @@ export const loadGenres = () => api.get('genres');
 export const saveSeries = (newSeries) => api.post('series', newSeries);
 //get filtrando por o parametro genre no ex
 export const loadSeriesByGenre = (genre) => api.get('series?genre='+genre);
+// delete como parametro o id
+export const deleteSeries = (id) => api.delete('series/'+id);
+
 
 const apis = {
   loadGenres: loadGenres,
@@ -122,7 +139,34 @@ export default apis
 
 
 
+____________________________________________________________
 
+Forma de testar o state
+ Colocar no render
+<p>{JSON.stringify(this.state)}</p>
+
+_____________________________________________________________
+
+Pegar valor default e colocar nos inputs usado nos editar
+
+
+defaultValue={this.state.series.name}
+
+Ex:
+<input type="text" ref="name" defaultValue={this.state.series.name} className="form-control" name="nome" placeholder="Nome da Série"/>
+
+ou
+
+ api.loadSeriesById(this.props.match.params.id)
+        .then((res) => {
+          this.setState({ series: res.data })
+
+          this.refs.name.value = this.state.series.name
+          this.refs.genre.value = this.state.series.genre
+          this.refs.comments.value = this.state.series.comments
+          this.refs.status.value = this.state.series.status
+          
+        })
 
 
 ________________________________________________
@@ -178,7 +222,16 @@ Para redirecionar links ou components apos alguma açao
     }
 
 4> dar um set state redirect na ação que vc quer que redirecione
-
+    // quando a api retornar os resultados fazer o post
+    // o this.refs.genre.value pegar o valor do select do genero
+     api.saveSeries(newSeries)
+      .then((res)=>{
+        // console.log((res));
+        // console.log(newSeries);
+        this.setState({
+          redirect: '/series/'+this.refs.genre.value
+        })
+      })
 
 ____________________________________________________________
 

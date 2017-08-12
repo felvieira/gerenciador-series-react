@@ -3,6 +3,7 @@ import axios from 'axios'
 //passar base dos endereços da api
 const api = axios.create({
   baseURL: 'http://localhost:3001/'
+  // baseURL: 'https://api.myjson.com/bins/mdvrx'
 })
 
 export const loadGenres = () => api.get('genres');

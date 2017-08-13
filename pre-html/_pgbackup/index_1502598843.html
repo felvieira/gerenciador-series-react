@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Nova Zé - Tecnologia e Comunicação</title>
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="assets/css/styles.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+    <header>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <img src="assets/img/LOGO - NOVA ZÉ.png" alt="" class="logo img-responsive">
+                </div>
+                <div class="col-lg-9">
+                    <nav class="mainMenu">
+                        <label for="toggleMenu" class="menuTitle">MENU</label>
+
+                        <ul class="menu" style="transition: none; max-height: 800px; display: none;">
+                            <li><a href="#">Homens</a></li>
+                            <li><a href="#">Mulheres</a></li>
+                            <li><a href="#">Crianças</a></li>
+                            <li><a href="#">Calçados</a></li>
+                            <li><a href="#">Ofertas</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <section id="slider" class="">
+
+        <div class="container-fluid">
+            <div id="sliderFashion" class="carousel slide">
+                <ol class="carousel-indicators">
+                    <li data-target="#sliderFashion" data-slide-to="0" class="" contenteditable="false"></li>
+                    <li data-target="#sliderFashion" data-slide-to="1" class="active" contenteditable="false"></li>
+                    <li data-target="#sliderFashion" data-slide-to="2" class="" contenteditable="false"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="item" style="">
+                        <img src="assets/img/BANNER.png" alt="" class="">
+                    </div>
+                    <div class="item active">
+                        <img src="assets/img/BANNER.png" alt="" class="">
+                    </div>
+                    <div class="item" style="">
+                        <img src="assets/img/BANNER.png" alt="" class="">
+                    </div>
+                </div>
+
+                <a class="left carousel-control" href="#sliderFashion" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+
+                <a class="right carousel-control" href="#sliderFashion" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
+
+
+            </div>
+        </div>
+
+    </section>
+
+
+
+    <footer>
+        <div class="container-fluid">
+
+            <section id="newsletter" class="">
+
+            </section>
+
+            <section id="footer" class="">
+
+            </section>
+
+        </div>
+    </footer>
+
+
+    </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script>
+        function responsiveMenu() {
+            $('.menuTitle').click(function () {
+                $('.menu').slideToggle("slow");
+                $('.menu').css({
+                    "max-height": "800px"
+                });
+            });
+        };
+
+        $(function () {
+            $(".menu").css({
+                "display": "none",
+                "transition": "none",
+                "max-height": "inherit"
+            });
+            $("#toggleMenu").remove();
+            responsiveMenu();
+        });
+
+
+        $('#sliderFashion').carousel();
+        var winWidth = $(window).innerWidth();
+        $(window).resize(function () {
+
+            if ($(window).innerWidth() < winWidth) {
+                $('.carousel-inner>.item>img').css({
+                    'min-width': winWidth,
+                    'width': winWidth
+                });
+            } else {
+                winWidth = $(window).innerWidth();
+                $('.carousel-inner>.item>img').css({
+                    'min-width': '',
+                    'width': ''
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
